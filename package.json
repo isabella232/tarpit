@@ -1,0 +1,23 @@
+{
+  "name": "tarpit",
+  "version": "0.0.0",
+  "description": "tarpit actions based on a key",
+  "main": "tarpit.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/tarpit.git"
+  },
+  "author": "ryan day <ryan@npmjs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npm/tarpit/issues"
+  },
+  "homepage": "https://github.com/npm/tarpit#readme",
+  "devDependencies": {
+    "redis": "^2.7.1",
+    "tape": "^4.6.3"
+  }
+}
