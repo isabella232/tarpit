@@ -18,8 +18,8 @@ function tarpit(opts){
       if(!obj.count || isNaN(obj.count)) {
         obj.count = 0
       }
-
-      if(obj.time < now-opts.max) {
+      // it should take no requests for opts.max*2 to escape from the tarpit.
+      if(obj.time < now-(opts.max*2)) {
         obj.count = 0
       }
 
@@ -33,7 +33,7 @@ function tarpit(opts){
         cb(err,delay)
       },delay||0)
 
-      return obj.count
+      return delay
     })
   }
 }
