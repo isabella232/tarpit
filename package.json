@@ -1,6 +1,6 @@
 {
   "name": "tarpit",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "tarpit actions based on a key",
   "main": "tarpit.js",
   "scripts": {
