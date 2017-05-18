@@ -4,7 +4,9 @@
   "description": "tarpit actions based on a key",
   "main": "tarpit.js",
   "scripts": {
-    "test": "tape test/*.js"
+    "lint": "standard --fix",
+    "test": "tape test/*.js",
+    "posttest": "npm run lint"
   },
   "repository": {
     "type": "git",
@@ -18,6 +20,7 @@
   "homepage": "https://github.com/npm/tarpit#readme",
   "devDependencies": {
     "redis": "^2.7.1",
+    "standard": "^10.0.2",
     "tape": "^4.6.3"
   }
 }
