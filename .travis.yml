@@ -1,0 +1,13 @@
+sudo: false
+language: node_js
+
+notifications:
+  email: false
+
+services:
+  - redis-server
+
+node_js:
+  - 4
+  - 6
+  - 7
