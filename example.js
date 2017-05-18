@@ -16,6 +16,9 @@ var pit = tarpit({
     console.log('get ', key)
     key = 'tarpit:' + name + ':' + key
     client.get(key, function (err, str) {
+      if (err) {
+        throw err
+      }
       console.log('got ', key)
 
       var obj = json(str) || {}
@@ -31,6 +34,9 @@ var pit = tarpit({
 })
 
 pit('fooo', function (err, wait) {
+  if (err) {
+    throw err
+  }
   console.log('i had to wait ', wait, ' in the tarpit')
   client.unref()
 })

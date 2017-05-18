@@ -13,12 +13,14 @@ test('can', function (t) {
       console.log('get ', key)
       key = 'tarpit:' + name + ':' + key
       client.get(key, function (err, str) {
+        t.ok(!err, 'no error')
         console.log('got ', key)
 
         var obj = json(str) || {}
         var count = (obj.count || 0) + 1
 
         client.setex(key, max / 1000, JSON.stringify({time: Date.now(), count: count}), function (err) {
+          t.ok(!err, 'no error')
           console.log('did setex ', key, obj)
           cb(err, obj)
         })
@@ -33,6 +35,7 @@ test('can', function (t) {
       t.equals(wait, 1, 'wait should have been 1')
 
       pit('fooo', function (err, wait) {
+        t.ok(!err, 'no error')
         t.equals(wait, 10, 'wait should have been 10')
         t.end()
         client.unref()
