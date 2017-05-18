@@ -1,37 +1,30 @@
-// tarpit
-//
-// The second change: tarpit on that endpoint.
-// this is slightly more complex, but not so hard. use a redis to store IPs +  last access times + access counts, for this endpoint only. Do an exponential backoff on responding to an IP that's already hit the endpoint even once. Force them to change IPs way too often.  Redis data structure is: ip is key to a hash that has last access time & count.
+var tar = require('./lib/tar')
+var json = require('./util/json')
+
+var redis = require('redis')
+var client = redis.createClient('redis://127.0.0.1:6379')
 
 module.exports = tarpit
 
-function tarpit (opts) {
-  opts.wait = opts.wait || 10
-  opts.max = opts.max || 10000
+function tarpit(key, opts, target) {
+  var name = opts.name
+  var maxWait = opts.maxWait
+    
+  var pit = tar({
+    get: function (key, target) {
+      key = 'tarpit:' + name + ':' + key
+      client.get(key, function(err, str) {
+        if (err) throw err
 
-  return function (key, cb) {
-    opts.get(key, function (err, obj) {
-      var now = Date.now()
-      obj.time = obj.time || 0
-      if (!obj.count || isNaN(obj.count)) {
-        obj.count = 0
-      }
-      // it should take no requests for opts.max*2 to escape from the tarpit.
-      if (obj.time < now - (opts.max * 2)) {
-        obj.count = 0
-      }
+        var obj = json(str) || {}
+        var count = (obj.count || 0) + 1
+        var data = JSON.stringify({time: Date.now(), count: count})
 
-      var delay = Math.pow(opts.wait, obj.count)
-
-      if (delay > opts.max) {
-        delay = opts.max
-      }
-
-      setTimeout(function () {
-        cb(err, delay)
-      }, delay || 0)
-
-      return delay
-    })
-  }
+        client.setex(key, maxWait / 1000, data, function(err) {
+          target(err, obj)
+        })
+      })
+    },
+    maxWait: maxWait
+  })
 }
