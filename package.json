@@ -1,0 +1,21 @@
+{
+  "name": "@ag_dubs/artax",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard --fix",
+    "posttest": "npm run lint",
+    "test": "tape test/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "redis": "^2.7.1"
+  },
+  "devDependencies": {
+    "standard": "^10.0.2",
+    "tape": "^4.6.3"
+  }
+}
