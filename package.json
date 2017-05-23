@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ex": "node examples/example",
     "lint": "standard --fix",
     "posttest": "npm run lint",
     "test": "tape test/*.js"
