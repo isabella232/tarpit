@@ -54,6 +54,7 @@ function pit (key, name, max, cb) {
 
     const data = JSON.stringify({time: Date.now(), count: count})
     client.setex(id, max / 1000, data, function (err) {
+      client.unref()
       cb(err, record)
     })
   })
