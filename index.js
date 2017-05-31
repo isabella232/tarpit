@@ -1,3 +1,5 @@
+const logger = require('bole')('tarpit')
+
 // tarpit
 //
 // The second change: tarpit on that endpoint.
@@ -26,6 +28,8 @@ function tarpit (opts) {
       if (delay > opts.max) {
         delay = opts.max
       }
+
+      if (delay > 100) logger.warn(`key ${key} has been delayed for ${delay}`)
 
       setTimeout(function () {
         cb(err, delay)
