@@ -29,7 +29,7 @@ function tarpit (opts) {
         delay = opts.max
       }
 
-      if (delay > 100) logger.warn(`key ${key} has been delayed for ${delay}`)
+      if (delay > 40) logger.warn(`key ${key} has been delayed for ${delay}`)
 
       setTimeout(function () {
         cb(err, delay)
