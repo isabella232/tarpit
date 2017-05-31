@@ -15,12 +15,24 @@ function tarpit (opts) {
     opts.get(key, function (err, obj) {
       var now = Date.now()
       obj.time = obj.time || 0
+
       if (!obj.count || isNaN(obj.count)) {
         obj.count = 0
       }
+
+      if (!obj.escapes || isNaN(obj.escapes)) {
+        obj.escapes = 0
+      }
+
+      if (obj.escapes > 1) {
+        opts.max = opts.max * obj.escapes
+        logger.warn(`key ${key} has escaped > 1 time. the max wait is now ${opts.max}.`)
+      }
+
       // it should take no requests for opts.max*2 to escape from the tarpit.
       if (obj.time < now - (opts.max * 2)) {
         obj.count = 0
+        obj.escapes += 1
       }
 
       var delay = Math.pow(opts.wait, obj.count)
